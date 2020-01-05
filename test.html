@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ko">
+<head>
+
+<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, width=device-width" />
+<meta name="format-detection" content="telephone=no">
+<title>삼성 모바일 캠퍼스</title>
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/module.css">
+<link rel="stylesheet" href="../css/modal.css">
+<link rel="stylesheet" href="../css/page.main.css">
+<!-- script -->
+<script src="../js/ui.libs.js"></script>
+<script src="../js/ui.plugin.js"></script>
+<script src="../js/ui.abstract.js"></script>
+<script src="../js/ui.common.js"></script>
+<script src="../js/page.main.js"></script>
+<!--<script src="http://10.21.106.228:9095/target/target-script-min.js#anonymous"></script>-->
+
+<!-- 개발추가 시작 -->
+	<script type="text/javascript" src="../js/commonJQueryPlugins.js"></script>		<!-- SMC mobile common jquery plugin -->
+	<script type="text/javascript" src="../js/commonUtils.js"></script>				<!-- SMC mobile common utils -->
+	<script type="text/javascript" src="../js/androidAppUtils.js"></script>			<!-- Native App I/F -->
+<!-- 개발추가 끝 --> 
+</head>
+
+<body>
+
+<div class="l-wrap">
+    
+
+        <header class="l-head">
+        <a href="javascript:history.back()" class="l-head__anchor l-head__anchor--back" title="이전 페이지"><i class="o-icon o-icon--back" aria-hidden="true"></i></a>
+        <h1 class="l-head__title">알림</h1>
+        <div class="l-head__util">
+            <button id="menu" type="button" class="l-head__anchor o-button" title="전체 메뉴" onclick="smcAppUtils.openCategory('categoryCallback');"><i class="o-icon o-icon--hamburger" aria-hidden="true"></i></button>
+        </div>
+    </header>
+    <main class="l-content">
+        <section>
+            <h2 class="sr-only">알림 목록</h2>
+
+            <ul class="c-grid c-grid--gutter c-grid--block" id="alram_list">
+<!--                 <li class="c-grid__item">
+                    <a href="#" class="alarm">
+                        <strong class="alarm__title">고장신고<em class="o-new"><span class="sr-only">새글</span></em></strong>
+                        <p class="alarm__text">새로운 신고건이 있습니다.</p>
+                        <span class="alarm__date">2017.11.07 18:15</span>
+                    </a>
+                </li>
+                <li class="c-grid__item">
+                    <a href="#" class="alarm">
+                        <strong class="alarm__title">1:1문의</strong>
+                        <p class="alarm__text">새로운 문의건이 있습니다.</p>
+                        <span class="alarm__date">2017.10.23 11:26</span>
+                    </a>
+                </li>
+                <li class="c-grid__item">
+                    <a href="#" class="alarm">
+                        <strong class="alarm__title">소속매장변경</strong>
+                        <p class="alarm__text">새로운 승인요청건이 있습니다.</p>
+                        <span class="alarm__date">2017.09.03 07:13</span>
+                    </a>
+                </li>
+                [D]
+                    소속매장변경 및 매장정보수정의 반려건만 레이어팝업으로 내용 보여줌.
+                    레이어 콘텐츠 수정 후 $( modalID ).trigger('open')으로 열기
+
+                    $('#ly-reject-change').trigger('open');
+                    $('#ly-reject-modify').trigger('open');
+               
+                소속매장변경 [반려] -->
+<!--                 <li > -->
+<!--                     <a href="javascript:void(0);" class="alarm" data-js="modal" data-src="#ly-reject-change"> -->
+ 					<a href="javascript:void(0);" data-js="modal" data-src="#ly-reject-change">
+<!--                         <strong class="alarm__title">소속매장변경</strong> -->
+<!--                         <p class="alarm__text">새로운 반려건이 있습니다.</p> -->
+<!--                         <span class="alarm__date">2017.09.03 07:13</span> -->
+                    </a>
+<!--                 </li> -->
+<!--                 매장정보수정 [반려] -->
+<!--                 <li class="c-grid__item"> -->
+                     <a href="javascript:void(0);" data-js="modal" data-src="#ly-reject-modify"> 
+<!--                         <strong class="alarm__title">매장정보수정</strong> -->
+<!--                         <p class="alarm__text">새로운 반려건이 있습니다.</p> -->
+<!--                         <span class="alarm__date">2017.09.03 07:13</span> -->
+<!--                     </a> -->
+<!--                 </li> -->
+            </ul>
+            
+            <!-- 내역 없을 때 -->
+            <p class="c-empty c-empty--wide" id="alram_list_empty">
+                <i class="o-icon o-icon--alarm-empty" aria-hidden="true"></i> <!-- o-icon--board-empty 클래스 생성 -->
+                알림 내역이 없습니다.
+            </p>
+            <!-- //내역 없을 때 -->            
+        </section>
+
+        <!-- 레이어 : 소속매장변경 [반려] -->
+        <section id="ly-reject-change" class="modal" tabindex="-1" role="dialog" aria-label="소속매장변경 반려">
+            <h1 class="modal__title">소속매장변경</h1>
+            <div class="modal__body" tabindex="0" id="trigger1">
+<!--                 <h2 class="modal__subtitle">신규매장정보</h2>
+
+                <div class="modal-table">
+                    <table>
+                        <caption><span class="sr-only">신규매장정보</span></caption>
+                        <colgroup>
+                            <col style="width:60px">
+                            <col>
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th scope="row">매장명</th>
+                            <td>삼성디지털플라자 연대점</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">주소</th>
+                            <td>서울특별시 마포구 양화로 171 삼성디지털프라자 4층</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">전화번호</th>
+                            <td>02-3456-7890</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">팩스번호</th>
+                            <td>02-3456-7891</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="modal__subtitle">반려사유</h2>
+                <div class="modal-table">
+                    <table>
+                        <caption><span class="sr-only">반려사유</span></caption>
+                        <tbody>
+                        <tr>
+                            <td>반려사유는 이렇고 저렇고 그렇고 그래서 저래서 이렇게 반려되었습니다.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div> -->
+            </div>
+            <div class="modal__foot">
+                <button type="button" class="o-button o-button--blue o-button--2x modal__button" data-dismiss="confirm">확인</button>
+                <button type="button" class="o-button modal__close" data-dismiss="cancel" title="레이어팝업 닫기"><i class="o-icon o-icon--modal-close" aria-hidden="true"></i></button>
+            </div>
+        </section>
+        <!-- //레이어 : 소속매장변경 [반려] -->
+
+        <!-- 레이어 : 매장정보수정 [반려] -->
+        <section id="ly-reject-modify" class="modal" tabindex="-1" role="dialog" aria-label="매장정보수정 반려">
+            <h1 class="modal__title">매장정보수정</h1>
+            <div class="modal__body" tabindex="0" id="trigger2">
+<!--                 <h2 class="modal__subtitle">변경내용</h2>
+
+                <div class="modal-table">
+                    <table>
+                        <caption><span class="sr-only">변경내용</span></caption>
+                        <colgroup>
+                            <col style="width:60px">
+                            <col>
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th scope="row">매장명</th>
+                            <td>변경없음</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">주소</th>
+                            <td>변경없음</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">전화번호</th>
+                            <td>02-3456-7890</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">팩스번호</th>
+                            <td>02-3456-7891</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="modal__subtitle">반려사유</h2>
+                <div class="modal-table">
+                    <table>
+                        <caption><span class="sr-only">반려사유</span></caption>
+                        <tbody>
+                        <tr>
+                            <td>반려사유는 이렇고 저렇고 그렇고 그래서 저래서 이렇게 반려되었습니다.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div> -->
+            </div>
+            <div class="modal__foot">
+                <button type="button" class="o-button o-button--blue o-button--2x modal__button" data-dismiss="confirm">확인</button>
+                <button type="button" class="o-button modal__close" data-dismiss="cancel" title="레이어팝업 닫기"><i class="o-icon o-icon--modal-close" aria-hidden="true"></i></button>
+            </div>
+        </section>
+        <!-- //레이어 : 매장정보수정 [반려] -->
+    </main>
+</div>
+
+<a href="#" class="o-button skip-to-top" id="js-skip-to-top" aria-label="본문 상단 이동"><i class="o-icon o-icon--top" aria-hidden="true"></i></a>
+<script>
+
+if(smcCommonUtils.getUrlParam("tech")!=undefined){
+	$("#menu").hide();
+}
+//화면이 완전히 로딩된 후 처리
+
+(function($){
+	$(document).ready(function(){
+		var startIndex 	= 1;	//조회 시작 인덱스
+		var pageCount 	= 20;	//페이지 카운트수
+		var $alramList = $("#alram_list");
+		var loginKey = smcAppUtils.getLoginKey();
+		var param = {};
+		var resultCnt = '';
+		/**
+		 * api call error callback funtion 
+		 * param :  $error_message - error code
+		 */
+		function checkErrorStatus(error_status) {
+			var error_message = {};
+			switch(error_status){
+
+        	default:
+        		smcCommonUtils.alert('<span>네트워크에 연결할 수<br>없습니다.</span><br>네트워크 상태 확인 후<br>다시 시도해 주세요.', '네트워크 에러', 'type2', false, confirmErrorPopup);
+        	break;
+        	
+			}
+		}
+		
+		/**
+		 * error alert after funtion
+		 */
+		function confirmErrorPopup() {
+			location.href = '/' + smcCommonUtils.CONTEXT + '/static/front/html/main.html';
+		}
+		
+		
+		function addEvent(){
+		    $("a[name=popup]").off("click").on("click", function() { //진열품목 상세
+		    	var alarmSeq = $(this).find(".alarmSeq").val();
+		    	var targetSeq = $(this).find(".targetSeq").val();
+		    	var code = $(this).find(".code").val();
+		    	var confirmYn = $(this).find(".confirmYn").val();
+		    	var url = $(this).find(".url").val();
+		    	param.alarmSeq = alarmSeq;
+				param.targetSeq = targetSeq;
+				param.code = code;
+				param.confirmYn = confirmYn;
+				
+				if(code == 'ALRAM07'){
+		    		callRestApi('/getAlramDetail', param, openAlram1);
+				}else if(code == 'ALRAM08'){
+					callRestApi('/getAlramDetail', param, openAlram2);
+				}else{
+					callRestApi('/getAlramDetail', param, '');
+
+					if(url != 'undefined'){
+						location.href = '/' + smcCommonUtils.CONTEXT + '/static/front/html/'+url;
+					}else{
+						smcCommonUtils.alert('URL 이 없는 항목입니다.');
+					}	
+				}
+			});
+		}
+		
+		function openAlram1(result){
+			var mtm_list = $("#trigger1");
+			var mtm_list_html = '';
+
+				mtm_list_html += '<h2 class="modal__subtitle">신규매장정보</h2>';
+				mtm_list_html += '<div class="modal-table">';
+				mtm_list_html += '	<table>';
+				mtm_list_html += '		<caption><span class="sr-only">신규매장정보</span></caption>';
+				mtm_list_html += '		<colgroup>';
+				mtm_list_html += '		<col style="width:60px">';
+				mtm_list_html += '		<col>';
+				mtm_list_html += '		</colgroup>';
+				mtm_list_html += '		<tbody>';
+				mtm_list_html += '		<tr>';
+				mtm_list_html += '		<th scope="row">매장명</th>';
+				mtm_list_html += '		<td>'+result.orgName+'</td>';
+				mtm_list_html += '	</tr>';
+				mtm_list_html += '	<tr>';
+				mtm_list_html += '		<th scope="row">주소</th>';
+				mtm_list_html += '		<td>'+result.addrNew+' '+result.addrDetail+'</td>';
+				mtm_list_html += '	</tr>';
+				mtm_list_html += '	<tr>';
+				mtm_list_html += '		<th scope="row">전화번호</th>';
+				mtm_list_html += '		<td>'+result.wirePhone1+'</td>';
+				mtm_list_html += '	</tr>';
+				mtm_list_html += '	<tr>';
+				mtm_list_html += '		<th scope="row">팩스번호</th>';
+				mtm_list_html += '		<td>'+result.fax+'</td>';
+				mtm_list_html += '	</tr>';
+				mtm_list_html += '	</tbody>';
+				mtm_list_html += '  </table>';
+				mtm_list_html += '</div>';
+				mtm_list_html += '<h2 class="modal__subtitle">반려사유</h2>';
+				mtm_list_html += '<div class="modal-table">';
+				mtm_list_html += '	<table>';
+				mtm_list_html += '		<caption><span class="sr-only">반려사유</span></caption>';
+				mtm_list_html += '		<tbody>';
+				mtm_list_html += '		<tr>';
+				mtm_list_html += '			<td>'+result.reason+'</td>';
+				mtm_list_html += '		</tr>';
+				mtm_list_html += '		</tbody>';
+				mtm_list_html += '	</table>';
+				mtm_list_html += '	</div>';
+				
+				mtm_list.empty();
+				mtm_list.append(mtm_list_html);
+				$('#ly-reject-change').trigger('open');
+		}
+		
+		function openAlram2(result){
+			var mtm_list = $("#trigger2");
+			var mtm_list_html = '';
+
+				mtm_list_html += '<h2 class="modal__subtitle">변경내용</h2>';
+				mtm_list_html += '<div class="modal-table">';
+				mtm_list_html += '	<table>';
+				mtm_list_html += '		<caption><span class="sr-only">변경내용</span></caption>';
+				mtm_list_html += '		<colgroup>';
+				mtm_list_html += '		<col style="width:60px">';
+				mtm_list_html += '		<col>';
+				mtm_list_html += '		</colgroup>';
+				mtm_list_html += '		<tbody>';
+				mtm_list_html += '		<tr>';
+				mtm_list_html += '		<th scope="row">매장명</th>';
+				mtm_list_html += '		<td>'+result.orgName+'</td>';
+				mtm_list_html += '	</tr>';
+				mtm_list_html += '	<tr>';
+				mtm_list_html += '		<th scope="row">매장구분</th>';
+				mtm_list_html += '		<td>'+result.category1+'</td>';
+				mtm_list_html += '	</tr>';
+				mtm_list_html += '	<tr>';
+				mtm_list_html += '		<th scope="row">전화번호</th>';
+				mtm_list_html += '		<td>'+result.wirePhone1+'</td>';
+				mtm_list_html += '	</tr>';
+				mtm_list_html += '	<tr>';
+				mtm_list_html += '		<th scope="row">팩스번호</th>';
+				mtm_list_html += '		<td>'+result.fax+'</td>';
+				mtm_list_html += '	</tr>';
+				mtm_list_html += '	</tbody>';
+				mtm_list_html += '  </table>';
+				mtm_list_html += '</div>';
+				mtm_list_html += '<h2 class="modal__subtitle">반려사유</h2>';
+				mtm_list_html += '<div class="modal-table">';
+				mtm_list_html += '	<table>';
+				mtm_list_html += '		<caption><span class="sr-only">반려사유</span></caption>';
+				mtm_list_html += '		<tbody>';
+				mtm_list_html += '		<tr>';
+				mtm_list_html += '			<td>'+result.reason+'</td>';
+				mtm_list_html += '		</tr>';
+				mtm_list_html += '		</tbody>';
+				mtm_list_html += '	</table>';
+				mtm_list_html += '	</div>';
+				
+				mtm_list.empty();
+				mtm_list.append(mtm_list_html);
+				$('#ly-reject-modify').trigger('open');
+		}
+		
+		/**
+		 * 알람목록
+		 */
+		function alramListInfoSet() {
+			
+			var url = '/getAlramList';
+			var param = {};
+			param.startIndex = startIndex;					//조회 시작 인덱스
+			param.endIndex = startIndex + pageCount -1;		//조회 종료 인덱스
+
+			callRestApi(url,param,alramReportListRender);
+		}
+		
+		function alramReportListRender(result){
+		var alramList = result.alramList;
+		
+		if(!smcCommonUtils.isBlank(alramList) && alramList.length > 0){
+			$("#alram_list").show();
+			$("#alram_list_empty").hide();
+		
+			if(alramList != undefined){
+			startIndex += alramList.length;
+			}
+			var $list_html = '';
+			if(!smcCommonUtils.isBlank(alramList) && alramList.length > 0){
+				resultCnt=result.totalAlramCount;
+			}
+			$.each(alramList, function(i) {
+				var list_info = alramList[i];
+				
+				if(list_info.sendDt != undefined && list_info.sendDt != null){
+					//발신일시
+					var alramDt = list_info.sendDt;
+					var alramYear = alramDt.substring(0,4);
+					var alramMonth = alramDt.substring(4,6);
+					var alramDay = alramDt.substring(6,8);
+					var alramHour = alramDt.substring(8,10);
+					var alramMin = alramDt.substring(10,12);
+				}
+				
+				var code = list_info.code;
+				
+				$list_html += '<li class="c-grid__item">';
+				// 소속매장변경(07) / 매장정보수정(08) 일때 레이어 팝업필요
+				if(code == 'ALRAM07'){
+					$list_html += '<a href="javascript:void(0);" class="alarm" data-js="modal" data-src="#ly-reject-change" name="popup">';
+				}else if(code == 'ALRAM08'){
+					$list_html += '<a href="javascript:void(0);" class="alarm" data-js="modal" data-src="#ly-reject-modify" name="popup">';
+				}else{ // 팝업 외 URL 처리를 위한 코드
+					// if 문을 이용하여 각 항목에 해당하는 리스트로 이동해야함
+					$list_html += '<a href="javascript:;" class="alarm" name="popup">';
+				
+				}
+				$list_html += '<input type="hidden" class="url" value="'+list_info.url+'">';
+				$list_html += '<input type="hidden" class="alarmSeq" value="'+list_info.alarmSeq+'">';
+				$list_html += '<input type="hidden" class="code" value="'+code+'">';
+				$list_html += '<input type="hidden" class="targetSeq" value="'+list_info.target+'">';
+				$list_html += '<input type="hidden" class="confirmYn" value="'+list_info.confirmYn+'">';
+				$list_html += '<strong class="alarm__title">'+list_info.typeCd;
+					if(list_info.confirmYn=='N'){ // 확인여부가 N 일 경우에 보여야함
+						$list_html += '<em class="o-new"><span class="sr-only">새글</span></em>';
+					}
+				$list_html += '</strong>';
+				$list_html += '<p class="alarm__text">'+list_info.contents+'</p>';
+				$list_html += '<span class="alarm__date">'+alramYear+'.'+alramMonth+'.'+alramDay+' '+alramHour+':'+alramMin+'</span>';
+				$list_html += '</a></li>';
+				
+			});
+			
+			
+			$alramList.append($list_html);
+			addEvent();
+			
+		}else{
+			$("#alram_list").hide();
+			$("#alram_list_empty").show();
+		}
+			//로딩바 종료
+			smcAppUtils.hideLoading(true);
+		}
+		
+
+		/**
+		 * api call
+		 */
+		function callRestApi(url, param, returnFunction){
+			//로딩바 출력
+			smcAppUtils.showLoading();
+			param.loginKey = loginKey;
+			
+			//170131 targetSeq추가
+			//param.targetSeq = storeSeq;
+			
+			var json_data = JSON.stringify(param); // form의 값을 넣은 오브젝트를 JSON형식으로 변환
+			smcCommonUtils.exec({
+				uri		: url,
+				type	: 'post',
+				dataType: 'json',
+				showLoading:true,
+		        param: json_data,
+				result	: function(json){
+					if(typeof returnFunction === 'function'){
+						returnFunction(json.data);
+					}
+				},errorCallback:  function(json){
+						checkErrorStatus(json.status);
+				}
+			});
+		}
+		
+		/**
+		 * 알람목록 리스트 페이징 
+		 */
+			$(window).scroll(function() {
+			//alert($(window).scrollTop()); // 2022.66 = 2526-503=2023 
+				if($(window).scrollTop()+1 >= $(document).height() - $(window).height()) {
+					
+					//alert('complete');
+					if(startIndex > 1 && ( parseInt(startIndex) % pageCount) == 1){
+						if(parseInt(pageCount) % parseInt(resultCnt) != 0){
+							alramListInfoSet();
+						}
+					}
+				}
+			});
+				
+		
+		function init(){
+			//addEvent();
+		     alramListInfoSet();
+			
+		}
+		
+		document.onreadystatechange = function(){
+			if(document.readyState === 'complete'){
+				init();
+			}
+		}
+
+
+	});
+})(jQuery);
+</script>
+</body>
+</html>
+
+
